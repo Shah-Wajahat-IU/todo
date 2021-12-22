@@ -21,3 +21,22 @@ def addTodoForm(request):
     print(request.POST['text'])
 
     return redirect('index')
+
+def completeTodo(request,todo_id):
+    todo=TodoList.objects.get(pk=todo_id)
+    todo.complete=True
+    todo.save()
+
+    return redirect('index')
+
+
+def deleteCompleted(request):
+    TodoList.objects.filter(complete__exact=True).delete()
+
+    return redirect('index')
+
+
+def allDeleted(request):
+    TodoList.objects.all().delete()
+
+    return redirect('index')
